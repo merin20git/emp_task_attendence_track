@@ -2,6 +2,9 @@
 # Ignore ALL node_modules inside all folders
 node_modules/
 
+attendence_backend/.env
+
+
 # Logs
 *.log
 
