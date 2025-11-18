@@ -1,0 +1,14 @@
+
+# Ignore ALL node_modules inside all folders
+node_modules/
+
+# Logs
+*.log
+
+# Build folders
+dist/
+build/
+
+# OS junk
+.DS_Store
+Thumbs.db
