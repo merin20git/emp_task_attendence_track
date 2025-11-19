@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -20,16 +21,18 @@ const AdminDashboard = () => {
 
   // Load users
   useEffect(() => {
-    axios.get("http://localhost:3030/admin/users")
-      .then(res => setUsers(res.data.data))
-      .catch(err => console.log(err));
+    axios
+      .get(`${API_BASE_URL}/admin/users`)
+      .then((res) => setUsers(res.data.data))
+      .catch((err) => console.log(err));
   }, []);
 
   // Load attendance
   useEffect(() => {
-    axios.get("http://localhost:3030/admin/attendance")
-      .then(res => setAttendance(res.data.data))
-      .catch(err => console.log(err));
+    axios
+      .get(`${API_BASE_URL}/admin/attendance`)
+      .then((res) => setAttendance(res.data.data))
+      .catch((err) => console.log(err));
   }, []);
 
   // Inputs
@@ -39,17 +42,17 @@ const AdminDashboard = () => {
 
   // Create Task
   const createTask = () => {
-    axios.post("http://localhost:3030/createTask", task)
+    axios
+      .post(`${API_BASE_URL}/createTask`, task)
       .then(() => {
         alert("Task Created!");
         setTask({ title: "", description: "", userId: "" });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="container mt-4">
-
       {/* Logout button */}
       <button
         className="btn btn-dark"
@@ -95,8 +98,10 @@ const AdminDashboard = () => {
           onChange={inputHandler}
         >
           <option value="">Select Employee</option>
-          {users.map(u => (
-            <option key={u._id} value={u._id}>{u.name}</option>
+          {users.map((u) => (
+            <option key={u._id} value={u._id}>
+              {u.name}
+            </option>
           ))}
         </select>
       </div>
@@ -135,7 +140,6 @@ const AdminDashboard = () => {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 };

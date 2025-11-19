@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const SignIn = () => {
 
   const loginUser = () => {
     axios
-      .post("http://localhost:3030/signIn", input)
+      .post(`${API_BASE_URL}/signIn`, input)
       .then((response) => {
         console.log("Login Response:", response.data);
 

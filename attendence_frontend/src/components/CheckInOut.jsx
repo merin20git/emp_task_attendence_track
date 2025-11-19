@@ -1,16 +1,21 @@
 import React from "react";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 const CheckInOut = () => {
   const userId = localStorage.getItem("userId");
 
   const checkIn = () =>
-    axios.post("http://localhost:3030/checkin", { userId })
-      .then(() => alert("Checked In"));
+    axios
+      .post(`${API_BASE_URL}/checkin`, { userId })
+      .then(() => alert("Checked In"))
+      .catch((err) => console.log(err));
 
   const checkOut = () =>
-    axios.post("http://localhost:3030/checkout", { userId })
-      .then(() => alert("Checked Out"));
+    axios
+      .post(`${API_BASE_URL}/checkout`, { userId })
+      .then(() => alert("Checked Out"))
+      .catch((err) => console.log(err));
 
   return (
     <div className="container mt-5">

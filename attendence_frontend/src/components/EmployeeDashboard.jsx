@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const EmployeeDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const EmployeeDashboard = () => {
   // Load Attendance Status
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/admin/attendance/${userId}`)
+      .get(`${API_BASE_URL}/admin/attendance/${userId}`)
       .then((res) => {
         if (res.data.data.length > 0) {
           const latest = res.data.data[0];
@@ -32,43 +33,53 @@ const EmployeeDashboard = () => {
   // Load Assigned Tasks
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/tasks/user/${userId}`)
+      .get(`${API_BASE_URL}/tasks/user/${userId}`)
       .then((res) => setTasks(res.data.data || []))
       .catch((err) => console.log(err));
   }, []);
 
+  // Check In
+  const handleCheckIn = () => {
+    axios
+      .post(`${API_BASE_URL}/checkin`, { userId })
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
+
+  // Check Out
+  const handleCheckOut = () => {
+    axios
+      .post(`${API_BASE_URL}/checkout`, { userId })
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="container mt-5">
-
       <div className="d-flex justify-content-between">
         <h1>Employee Dashboard</h1>
-        <button className="btn btn-dark" onClick={logout}>Logout</button>
+        <button className="btn btn-dark" onClick={logout}>
+          Logout
+        </button>
       </div>
 
       <h3>Attendance Status: {status}</h3>
 
-      <button
-        className="btn btn-success me-3"
-        onClick={() => axios.post("http://localhost:3030/checkin", { userId })}
-      >
+      <button className="btn btn-success me-3" onClick={handleCheckIn}>
         Check In
       </button>
 
-      <button
-        className="btn btn-danger"
-        onClick={() => axios.post("http://localhost:3030/checkout", { userId })}
-      >
+      <button className="btn btn-danger" onClick={handleCheckOut}>
         Check Out
       </button>
 
       <hr />
 
-    <button className="btn btn-info" onClick={() => navigate("/tasks")}>
-  Manage Tasks
-</button>
+      <button className="btn btn-info" onClick={() => navigate("/tasks")}>
+        Manage Tasks
+      </button>
 
-
-      <h3>Your Assigned Tasks</h3>
+      <h3 className="mt-4">Your Assigned Tasks</h3>
 
       {tasks.length === 0 ? (
         <p>No tasks assigned</p>

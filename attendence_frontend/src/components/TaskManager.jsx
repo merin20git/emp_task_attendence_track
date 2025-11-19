@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 const TaskManager = () => {
   const userId = localStorage.getItem("userId");
@@ -7,19 +8,23 @@ const TaskManager = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3030/tasks/user/${userId}`)
+      .get(`${API_BASE_URL}/tasks/user/${userId}`)
       .then((res) => setTasks(res.data.data || []))
-      .catch(err => console.log(err));
-  }, []);
+      .catch((err) => console.log(err));
+  }, [userId]);
 
   const startTask = (taskId) => {
-    axios.post("http://localhost:3030/task/start", { userId, taskId })
-      .then(() => alert("Task Started"));
+    axios
+      .post(`${API_BASE_URL}/task/start`, { userId, taskId })
+      .then(() => alert("Task Started"))
+      .catch((err) => console.log(err));
   };
 
   const stopTask = (taskId) => {
-    axios.post("http://localhost:3030/task/stop", { userId, taskId })
-      .then(() => alert("Task Stopped"));
+    axios
+      .post(`${API_BASE_URL}/task/stop`, { userId, taskId })
+      .then(() => alert("Task Stopped"))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -33,10 +38,17 @@ const TaskManager = () => {
           <h5>{t.title}</h5>
           <p>{t.description}</p>
 
-          <button className="btn btn-primary me-2" onClick={() => startTask(t._id)}>
+          <button
+            className="btn btn-primary me-2"
+            onClick={() => startTask(t._id)}
+          >
             Start
           </button>
-          <button className="btn btn-warning" onClick={() => stopTask(t._id)}>
+
+          <button
+            className="btn btn-warning"
+            onClick={() => stopTask(t._id)}
+          >
             Stop
           </button>
         </div>

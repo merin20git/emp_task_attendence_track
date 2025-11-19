@@ -325,6 +325,10 @@ app.get("/user/:id", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Attendance Tracking Backend Running Successfully ");
+});
+
 
 const PORT = process.env.PORT || 3030;
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const SignUp = () => {
     };
 
     axios
-      .post("http://localhost:3030/signup", newUser)
+      .post(`${API_BASE_URL}/signup`, newUser)
       .then((response) => {
         console.log(response.data);
 
@@ -46,6 +47,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error);
+        alert("Registration failed!");
       });
   };
 
