@@ -326,6 +326,8 @@ app.get("/user/:id", async (req, res) => {
 });
 
 
-app.listen(3030, () => {
-  console.log("Server Started on port 3030");
+const PORT = process.env.PORT || 3030;
+
+app.listen(PORT, () => {
+  console.log("Server started on port " + PORT);
 });
